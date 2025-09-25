@@ -18,7 +18,7 @@ if (params.help) {
     log.info """
     Usage:
     This is the variant catalogue pipeline
-	This pipeline was developped to generate the IBVL (Silent Genomes Project)
+	This pipeline was developed to generate the IBVL (Silent Genomes Project)
 	Let\'s reduce health care disparities
 	
         The typical command for running the pipeline is as follows:
