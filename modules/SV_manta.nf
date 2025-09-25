@@ -1,6 +1,6 @@
 // Nextflow process
 // Owned by the Silent Genomes Project Activity 3 team
-// Developped to build the IBVL, a background variant library
+// Developed to build the IBVL, a background variant library
 
 // Overview of the process goal and characteristics :
 // SV calling. Call SV using manta

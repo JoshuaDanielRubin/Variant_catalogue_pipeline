@@ -1,7 +1,7 @@
 // Nextflow process
 // Created by Solenne Correard in December 2021
 // Owned by the Silent Genomes Project Activity 3 team
-// Developped to build the IBVL, a background variant library
+// Developed to build the IBVL, a background variant library
 
 // Overview of the process goal and characteristics :
 // Run a R script that calculates the distribution of Mitochondrial DNA Heteroplasmy for each variant in the cohort

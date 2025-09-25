@@ -1,7 +1,7 @@
 // Nextflow process
 // Created by Solenne Correard in December 2021
 // Owned by the Silent Genomes Project Activity 3 team
-// Developped to build the IBVL, a background variant library
+// Developed to build the IBVL, a background variant library
 
 // Overview of the process goal and characteristics :
 // Step merging the 2 vcf files (including the MT variants called against the reference genome and the shifted reference genome) for each individual
