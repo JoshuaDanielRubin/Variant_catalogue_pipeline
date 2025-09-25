@@ -5,7 +5,7 @@
 
 // Overview of the process goal and characteristics :
 // SNV Caling. GLnexus to do joint variant calling
-// GLnexus also include a varaint filtering step, that according to publications, is as good as GATK VQSR, so no additional step is needed.
+// GLnexus also include a variant filtering step, that according to publications, is as good as GATK VQSR, so no additional step is needed.
 
 process GLnexus_cli {
 

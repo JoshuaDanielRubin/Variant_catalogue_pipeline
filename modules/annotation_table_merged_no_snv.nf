@@ -6,7 +6,7 @@
 // Overview of the process goal and characteristics :
 // Create a file with the list of variants and their annotation
 // Same process for SNV and MT variants (using vep, obtaining a tsv)
-// The last line remove the # in front of "Uploaded_varaintion", which is necessary for downstream analysis
+// The last line remove the # in front of "Uploaded_variantion", which is necessary for downstream analysis
 
 process annotation_table_merged_no_snv {
 	label 'conda_annotate'

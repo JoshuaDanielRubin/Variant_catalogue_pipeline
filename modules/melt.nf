@@ -4,7 +4,7 @@
 
 // Overview of the process goal and characteristics :
 // SV calling. Call Mobile Element Insertions (MEI) using MELT
-// Rename varaints, compress the vcf and index the compressed vcf
+// Rename variants, compress the vcf and index the compressed vcf
 
 process melt {
 	label 'conda_annotate'

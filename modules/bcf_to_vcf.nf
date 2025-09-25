@@ -5,7 +5,7 @@
 
 // Overview of the process goal and characteristics :
 // SNV Calling. 
-// Split the multiallelic varaints (norm step) and transform the bcf into a vcf 
+// Split the multiallelic variants (norm step) and transform the bcf into a vcf 
 // Rename the variants and compress the vcf into a vcf.gz
 // Index the compressed vcf
 

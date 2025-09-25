@@ -5,7 +5,7 @@
 
 // Overview of the process goal and characteristics :
 // Merge all the samples (without joint calling) and create a vcf files with all the calls for each participant
-// Set the missing varaints to 0 as no joint calling is done for the MEI
+// Set the missing variants to 0 as no joint calling is done for the MEI
 // Index the vcf file
 
 process merge_samples_miss0 {

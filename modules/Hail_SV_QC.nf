@@ -6,7 +6,7 @@
 // Overview of the process goal and characteristics :
 // Run a python script with Hail to identify outliers variants
 // It includes a step to filter the variants
-// Future update : Include gnomAD frequency to each varaint, annotate the varaints using vep
+// Future update : Include gnomAD frequency to each variant, annotate the variants using vep
 
 process Hail_SV_QC {
 
