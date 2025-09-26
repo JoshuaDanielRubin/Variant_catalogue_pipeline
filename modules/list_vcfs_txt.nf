@@ -32,7 +32,7 @@ process list_vcfs_txt {
 	} else if (var_type == "SNV") {
                 """
                 find $params.outdir_ind/${assembly}/${batch}/${run}/${var_type}/Sample/ -name "*.g.vcf.gz" > ${var_type}_vcfs.txt
-                grep -f ${pop_list} ${sample_assignments} | cut -d ',' -f 2- | sed 's/$/,/' | \
+                grep -f ${sample_assignments} ${pop_list} | cut -d ',' -f 2- | sed 's/$/,/' | \
                 tr -d '\n' | tr ',' '\n' | sed 's/$/.g.vcf.gz/' > sample_assignments_subset.txt
                 comm -12 <(sort ${var_type}_vcfs.txt) <(sort sample_assignments_subset.txt) > ${var_type}_vcfs_subset.txt
                 """
