@@ -1,11 +1,10 @@
 // Nextflow process
 // Created by Solenne Correard in December 2021
 // Owned by the Silent Genomes Project Activity 3 team
-// Developed to build the IBVL, a background variant library
+// Developped to build the IBVL, a background variant library
 
 // Overview of the process goal and characteristics :
 // List the individuals files (vcf) that have been generated and that will be merged to obtain the aggregated dataset
-// Subset by list of populations if requested
 
 
 process list_vcfs_txt {
@@ -14,8 +13,6 @@ process list_vcfs_txt {
         
 	input :
         file individual_vcf
-        path pop_list
-        path sample_assignments
 	val assembly
 	val batch
 	val run
@@ -32,9 +29,6 @@ process list_vcfs_txt {
 	} else if (var_type == "SNV") {
                 """
                 find $params.outdir_ind/${assembly}/${batch}/${run}/${var_type}/Sample/ -name "*.g.vcf.gz" > ${var_type}_vcfs.txt
-                grep -f ${sample_assignments} ${pop_list} | cut -d ',' -f 2- | sed 's/$/,/' | \
-                tr -d '\n' | tr ',' '\n' | sed 's/$/.g.vcf.gz/' > sample_assignments_subset.txt
-                comm -12 <(sort ${var_type}_vcfs.txt) <(sort sample_assignments_subset.txt) > ${var_type}_vcfs_subset.txt
                 """
 	} else if (var_type == "SV") {
                 """
