@@ -22,7 +22,6 @@ process bcf_to_vcf {
         file ref
         path sample_assignments
         path pop_list
-        val subset
 
         output:
         path '*_norm.vcf.gz', emit : vcf                 

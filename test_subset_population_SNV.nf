@@ -14,10 +14,9 @@ params
         glnexus_out = Channel.fromPath("Subpopulations/yoruba_3_chr22.vcf.gz")
         sample_assignments = Channel.fromPath("Subpopulations/sample_assignments.csv")
         pop_list = Channel.fromPath("Subpopulations/pop_list.txt")
-        subset = true
 
 include {bcf_to_vcf} from "./modules/bcf_to_vcf.nf"
 
 workflow {
-    bcf_to_vcf(glnexus_out, assembly, batch, run, reference, sample_assignments, pop_list, subset)
+    bcf_to_vcf(glnexus_out, assembly, batch, run, reference, sample_assignments, pop_list)
 }
