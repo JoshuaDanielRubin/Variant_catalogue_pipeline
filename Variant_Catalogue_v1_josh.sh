@@ -14,4 +14,4 @@
 source /mnt/common/SILENT/Act3/conda/miniconda3/etc/profile.d/conda.sh
 Nextflow=/mnt/common/Precision/NextFlow/nextflow
 module load singularity
-$Nextflow run test_subset_population.nf -resume
+$Nextflow run test_subset_population_SNV.nf -resume

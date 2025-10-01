@@ -5,6 +5,7 @@
 
 // Overview of the process goal and characteristics :
 // SNV Calling. 
+// Optionally subset VCF by specified populations
 // Split the multiallelic variants (norm step) and transform the bcf into a vcf 
 // Rename the variants and compress the vcf into a vcf.gz
 // Index the compressed vcf
@@ -15,24 +16,39 @@ process bcf_to_vcf {
 
 	input :
 	file bcf_file
-	val assembly
-	val batch
-	val run
-	file ref
+        val assembly
+        val batch
+        val run
+        file ref
+        path sample_assignments
+        path pop_list
+        val subset
 
-	output :
-	path '*_norm.vcf.gz', emit : vcf	
-	path '*GLnexus_output.vcf.gz'
+        output:
+        path '*_norm.vcf.gz', emit : vcf                 
+        path '*GLnexus_output.vcf.gz'
+        path '*.vcf.gz.tbi'
 
 	script :
 	"""
-	# output an unmodified population vcf in compressed format
-	bcftools view ${bcf_file} -Oz -o ${bcf_file.simpleName}_GLnexus_output.vcf.gz
-	bcftools index -t ${bcf_file.simpleName}_GLnexus_output.vcf.gz
+        # subset the VCF based on the populations of interest
+        cut -d',' -f1 ${sample_assignments} > all_samples.txt
+        grep -f all_samples.txt ${pop_list} > grep_res.txt
+        grep -f grep_res.txt ${sample_assignments} > subset_assignments.txt
+        cat subset_assignments.txt | cut -d ',' -f 2- | sed 's/\$/,/' | tr -d '\n' | tr ',' '\n' > sample_subset_list.txt
 
-	# normalize/left align and split multi-allelic variants 
-	bcftools norm -m -any -Oz -o ${bcf_file.simpleName}_norm_int.vcf.gz -f ${ref} ${bcf_file}
-	bcftools index -t  ${bcf_file.simpleName}_norm_int.vcf.gz
-	bcftools annotate --set-id '%CHROM\\_%POS\\_%REF\\_%FIRST_ALT' -O z -o ${bcf_file.simpleName}_norm.vcf.gz ${bcf_file.simpleName}_norm_int.vcf.gz
+        # subset the population vcf
+        bcftools view -S sample_subset_list.txt ${bcf_file} -Oz -o ${bcf_file.simpleName}_GLnexus_output.vcf.gz
+
+        # index
+        bcftools index -t ${bcf_file.simpleName}_GLnexus_output.vcf.gz
+
+        # normalize/left align and split multi-allelic variants
+        bcftools norm -m -any -Oz -o ${bcf_file.simpleName}_norm_int.vcf.gz \
+            -f ${ref} ${bcf_file.simpleName}_GLnexus_output.vcf.gz
+        bcftools index -t  ${bcf_file.simpleName}_norm_int.vcf.gz
+        bcftools annotate --set-id '%CHROM\\_%POS\\_%REF\\_%FIRST_ALT' -O z -o ${bcf_file.simpleName}_norm.vcf.gz \
+            ${bcf_file.simpleName}_norm_int.vcf.gz
+
 	"""
 }
