@@ -22,15 +22,29 @@ process bcf_to_vcf_subset {
         path pop_list
         val subset
 
-	output :
-	path '*.vcf.gz'
+	output:
+        path '*.vcf.gz'
+        path '*GLnexus_output.vcf.gz'
+        path '*.vcf.gz.tbi'
 
 	script :
 	"""
+        # subset the VCF based on the populations of interest
         cut -d',' -f1 ${sample_assignments} > all_samples.txt
         grep -f all_samples.txt ${pop_list} > grep_res.txt
         grep -f grep_res.txt ${sample_assignments} > subset_assignments.txt
         cat subset_assignments.txt | cut -d ',' -f 2- | sed 's/\$/,/' | tr -d '\n' | tr ',' '\n' > sample_subset_list.txt
-        bcftools view -S sample_subset_list.txt ${bcf_file} | gzip > subset.vcf.gz
+
+        # subset the population vcf
+        bcftools view -S sample_subset_list.txt ${bcf_file} -Oz -o ${bcf_file.simpleName}_GLnexus_output.vcf.gz
+
+        # index
+        bcftools index -t ${bcf_file.simpleName}_GLnexus_output.vcf.gz
+
+        # normalize/left align and split multi-allelic variants
+        bcftools norm -m -any -Oz -o ${bcf_file.simpleName}_norm_int.vcf.gz -f ${ref} ${bcf_file}
+        bcftools index -t  ${bcf_file.simpleName}_norm_int.vcf.gz
+        bcftools annotate --set-id '%CHROM\\_%POS\\_%REF\\_%FIRST_ALT' -O z -o ${bcf_file.simpleName}_norm.vcf.gz ${bcf_file.simpleName}_norm_int.vcf.gz
+
 	"""
 }
