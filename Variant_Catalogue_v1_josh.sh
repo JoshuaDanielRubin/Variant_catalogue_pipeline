@@ -3,9 +3,9 @@
 ## CPU Usage
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --mem=4G
+#SBATCH --mem=8G
 #SBATCH -p silent_q
-#SBATCH --time=0:10:00
+#SBATCH --time=0:15:00
 
 ## Output and Stderr
 #SBATCH --output=logs/%x-%j.out
