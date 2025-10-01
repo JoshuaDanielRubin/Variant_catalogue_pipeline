@@ -6,14 +6,14 @@ nextflow.enable.dsl=2
 
 
 params
-        outdir_ind  = "/mnt/scratch/SILENT/Act3/Josh-scratch/subset_variant_aggregation/ind/"
-        run = "run_test"
-        batch = "batch_test"
+        outdir_ind  = "/mnt/scratch/SILENT/Act3/Josh-scratch/subset_variant_aggregation/Variant_catalogue_pipeline/Subpopulations/ind/"
+        run = "test_batch"
+        batch = "test_run"
         assembly    = 'GRCh38'
         reference   = Channel.fromPath("/mnt/common/DATABASES/REFERENCES/GRCh38/GENOME/1000G/GRCh38_full_analysis_set_plus_decoy_hla.fa")
-        glnexus_out = Channel.fromPath("Subpopulations/SNV/yoruba_3_chr22.vcf.gz")
-        sample_assignments = Channel.fromPath("Subpopulations/SNV/sample_assignments.csv")
-        pop_list = Channel.fromPath("Subpopulations/SNV/pop_list.txt")
+        glnexus_out = Channel.fromPath("Subpopulations/yoruba_3_chr22.vcf.gz")
+        sample_assignments = Channel.fromPath("Subpopulations/sample_assignments_SNV.csv")
+        pop_list = Channel.fromPath("Subpopulations/pop_list.txt")
 
 include {bcf_to_vcf} from "./modules/bcf_to_vcf.nf"
 
