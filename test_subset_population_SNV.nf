@@ -11,9 +11,9 @@ params
         batch = "batch_test"
         assembly    = 'GRCh38'
         reference   = Channel.fromPath("/mnt/common/DATABASES/REFERENCES/GRCh38/GENOME/1000G/GRCh38_full_analysis_set_plus_decoy_hla.fa")
-        glnexus_out = Channel.fromPath("Subpopulations/yoruba_3_chr22.vcf.gz")
-        sample_assignments = Channel.fromPath("Subpopulations/sample_assignments.csv")
-        pop_list = Channel.fromPath("Subpopulations/pop_list.txt")
+        glnexus_out = Channel.fromPath("Subpopulations/SNV/yoruba_3_chr22.vcf.gz")
+        sample_assignments = Channel.fromPath("Subpopulations/SNV/sample_assignments.csv")
+        pop_list = Channel.fromPath("Subpopulations/SNV/pop_list.txt")
 
 include {bcf_to_vcf} from "./modules/bcf_to_vcf.nf"
 

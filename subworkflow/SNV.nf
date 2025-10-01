@@ -32,6 +32,8 @@ workflow SNV {
 	assembly        			= params.assembly
 	reference       			= file (params.ref)
 	reference_index 			= file (params.ref_index)
+        sample_assignments                      = params.sample_assignments
+        pop_list                                = params.pop_list
         SNV                                     = params.SNV
 		var_qc_intervals 						= ['autosomal', 'X', 'Y']
         chr                                     = params.chrom
@@ -61,7 +63,7 @@ workflow SNV {
 		// Aggregated steps (Need to be run everytime a new sample is added to the cohort)
 		list_vcfs_txt(deepvariant_call.out.deepvariant_gvcf.collect(), assembly, batch, run, SNV)
 		GLnexus_cli(list_vcfs_txt.out, run)
-		bcf_to_vcf(GLnexus_cli.out, assembly, batch, run, reference)
+		bcf_to_vcf(GLnexus_cli.out, assembly, batch, run, reference, sample_assignments, pop_list)
 
                 Hail_sample_QC(bcf_to_vcf.out.vcf, assembly,reference,reference_index,batch,run)
                 Hail_variant_QC(Hail_sample_QC.out.vcf_sample_filtered, Hail_sample_QC.out.filtered_sample_sex, assembly, reference, reference_index,batch,run,var_qc_intervals)
