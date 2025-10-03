@@ -6,7 +6,6 @@
 // Overview of the process goal and characteristics :
 // List the individuals files (vcf) that have been generated and that will be merged to obtain the aggregated dataset
 
-
 process MT_Step2_participant_data {
 
 	input :
@@ -15,6 +14,8 @@ process MT_Step2_participant_data {
 	val assembly
 	val batch
 	val run
+        path sample_assignments
+        path pop_list
 
         output :
         path '*.tsv', emit : MT_Step2_participant_data_tsv
@@ -22,11 +23,15 @@ process MT_Step2_participant_data {
 
         script:
 	"""
+        grep -f ${pop_list} ${sample_assignments} | cut -d ',' -f 2- | sed 's/\$/,/' | \
+        tr -d '\n' | tr ',' '\n' > sample_assignments_subset.txt
+        grep -f sample_assignments_subset.txt ${Sample_list} > Sample_list_pop_subset.txt        
+
 	echo "entity:participant_id\ts\tvcf_path" > header_MT_Step2_participant_data
 	cat header_MT_Step2_participant_data $Sample_MT_Step2_participant_data > MT_Step2_participant_data.tsv
 	
 	echo "participant" > header_participants_to_subset
-	cat header_participants_to_subset $Sample_list > MT_participants_to_subset.txt
+	cat header_participants_to_subset Sample_list_pop_subset.txt > MT_participants_to_subset.txt
 	"""
 }
 
