@@ -20,6 +20,7 @@ process bcf_to_vcf {
         val batch
         val run
         file ref
+        file ref_index
         path sample_assignments
         path pop_list
 
@@ -31,10 +32,8 @@ process bcf_to_vcf {
 	script :
 	"""
         # subset the VCF based on the populations of interest
-        cut -d',' -f1 ${sample_assignments} > all_samples.txt
-        grep -f all_samples.txt ${pop_list} > grep_res.txt
-        grep -f grep_res.txt ${sample_assignments} > subset_assignments.txt
-        cat subset_assignments.txt | cut -d ',' -f 2- | sed 's/\$/,/' | tr -d '\n' | tr ',' '\n' > sample_subset_list.txt
+        grep -f ${pop_list} ${sample_assignments} > subset_assignments.txt
+        cut -d',' -f1 subset_assignments.txt > sample_subset_list.txt
 
         # subset the population vcf
         bcftools view -S sample_subset_list.txt ${bcf_file} -Oz -o ${bcf_file.simpleName}_GLnexus_output.vcf.gz
